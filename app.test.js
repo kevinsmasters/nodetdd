@@ -9,6 +9,7 @@ describe('Todos API', () => {
     .then(response => {
       expect(response.body).toEqual(expect.arrayContaining([
         expect.objectContaining({
+          id: expect.any(Number),
           name: expect.any(String),
           completed: expect.any(Boolean)
         })
@@ -29,13 +30,7 @@ describe('Todos API', () => {
   });
 
   it('GET /todos/id ==> 404 if not found', () => {
-    return request(app).get('/todos/9999999')
-    .expect(404)
-  });
-
-  it('POST /todos ==> validate request body', () => {
-    return request(app).post('/todos').send({ name: 123 })
-    .expect(422)
+    return request(app).get('/todos/9999999').expect(404);
   });
 
   it('POST /todos --> array todos', () => {
@@ -49,6 +44,11 @@ describe('Todos API', () => {
         completed: false
       })
     })
+  });
+
+  it('POST /todos ==> validate request body', () => {
+    return request(app).post('/todos').send({ name: 123 })
+    .expect(422)
   });
   // rest of the CRUD, update + delete
 })
