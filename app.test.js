@@ -1,6 +1,14 @@
 const request = require('supertest');
 const app = require('./app');
 
+const todos = [
+  {
+    id: 1,
+    name: 'do something',
+    completed: false
+  }
+]
+
 describe('Todos API', () => {
   it('GET /todos ==> array todos', () => {
     return request(app).get('/todos')
@@ -51,4 +59,10 @@ describe('Todos API', () => {
     .expect(422)
   });
   // rest of the CRUD, update + delete
+
+  it('DELETE /todos/id ==> delete TODO by ID', () => {
+    return request(app).delete('/todos/2')
+    .expect('Content-Type', /json/)
+    .expect(200)
+  })
 })

@@ -45,4 +45,16 @@ router.post('/', function(req, res, next) {
   res.status(201).json(newTodo);
 })
 
+router.delete('/', function(req, res, next) {
+  const foundTodo = todos.find((todo) => todo.id === Number(req.params.id));
+
+  if (!foundTodo) {
+    // 404
+    return next(createError(404, 'Not Found'));
+  }
+
+  res.json(foundTodo);
+
+})
+
 module.exports = router;
